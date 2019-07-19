@@ -32,8 +32,10 @@ class Login extends Component {
   }
   UserLoginFunction = () => {
     const { UserEmail, UserPassword } = this.state;
-    if (UserEmail === "" || UserPassword === "") {
-      Alert.alert("Informe o e-mail e senha");
+    if (UserEmail === "") {
+      Alert.alert("Informe o e-mail");
+    } else if (UserPassword === "") {
+      Alert.alert("Digite a senha");
     } else {
       fetch("https://projetopi2019.000webhostapp.com/User_Login.php", {
         method: "POST",
@@ -64,11 +66,7 @@ class Login extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="#00b5cc"
-          hidden={true}
-        />
+        <StatusBar barStyle="dark-content" backgroundColor="#1DA1F2" />
         <KeyboardAvoidingView style={styles.container}>
           <TouchableWithoutFeedback
             style={styles.container}
@@ -78,7 +76,7 @@ class Login extends Component {
               <View style={styles.textContainer}>
                 <Image
                   style={styles.logo}
-                  source={require("../assets/icon.png")}
+                  source={require("../assets/LogoBlack.png")}
                 />
               </View>
               <View style={styles.infoContainer}>
@@ -130,15 +128,19 @@ class ProfileActivity extends Component {
           {" "}
           {this.props.navigation.state.params.Email}{" "}
         </Text>
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Text
+            style={styles.buttonText}
+            title="Exercicios"
+            onPress={() => this.props.navigation.navigate("list")}
+          >
+            {" "}
+            Exercicios{" "}
+          </Text>
+        </TouchableOpacity>
         <Button
           style={styles.buttonMains}
-          title="Exercicios"
-          color="#00b5cc"
-          onPress={() => this.props.navigation.navigate("list")}
-        />
-        <Button
-          style={styles.buttonMains}
-          color="#00b5cc"
+          color="#1DA1F2"
           title="Sair"
           onPress={() => goBack(null)}
         />
@@ -178,7 +180,7 @@ class list extends Component {
         style={{
           height: 1,
           width: "100%",
-          backgroundColor: "#607D8B"
+          backgroundColor: "#000000"
         }}
       />
     );
@@ -198,7 +200,7 @@ class list extends Component {
       <View style={styles.container}>
         <StatusBar
           barStyle="light-content"
-          backgroundColor="#00b5cc"
+          backgroundColor="#1DA1F2"
           hidden={true}
         />
         <FlatList
@@ -206,7 +208,7 @@ class list extends Component {
           ItemSeparatorComponent={this.FlatListItemSeparator}
           renderItem={({ item }) => (
             <Text
-              style={styles.FlatListItemStyle}
+              style={styles.title}
               onPress={this.GetFlatListItem.bind(this, item.desc)}
             >
               {" "}
@@ -249,20 +251,18 @@ export default class App extends React.Component {
     return <AppContainer />;
   }
 }
-
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#00b5cc",
+    backgroundColor: "#1DA1F2",
     flex: 1,
     flexDirection: "column"
   },
-  //inputText vão aqui
   infoContainer: {
     left: 0,
     right: 0,
     bottom: 0,
-    height: 200,
-    padding: 20
+    height: 180,
+    padding: 10
   },
   textContainer: {
     alignItems: "center",
@@ -272,8 +272,10 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   logo: {
-    width: 160,
-    height: 160
+    flex: 1,
+    width: 200,
+    height: 50,
+    resizeMode: "contain"
   },
   tittle: {
     color: "white",
@@ -285,7 +287,7 @@ const styles = StyleSheet.create({
   input: {
     height: 45,
     backgroundColor: "rgba(255,255,255,0.2)",
-    color: "#FFF",
+    color: "#000000",
     borderRadius: 10,
     paddingHorizontal: 10,
     marginBottom: 7,
@@ -297,13 +299,13 @@ const styles = StyleSheet.create({
   //Botão de login
   buttonContainer: {
     height: 45,
-    backgroundColor: "#545454",
+    backgroundColor: "#000000",
     borderRadius: 10,
     paddingVertical: 10
   },
   buttonText: {
     textAlign: "center",
-    color: "#00b5cc",
+    color: "#1DA1F2",
     fontWeight: "bold",
     fontSize: 18
   },
