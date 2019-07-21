@@ -3,7 +3,6 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable quotes */
 import React, { Component } from "react";
-import AwesomeAlert from "react-native-awesome-alerts";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import {
   StyleSheet,
