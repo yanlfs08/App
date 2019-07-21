@@ -3,6 +3,7 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable quotes */
 import React, { Component } from "react";
+import AwesomeAlert from "react-native-awesome-alerts";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import {
   StyleSheet,
@@ -84,7 +85,7 @@ class Login extends Component {
                   style={styles.input}
                   placeholder="Email"
                   onChangeText={UserEmail => this.setState({ UserEmail })}
-                  placeholderTextColor="rgba(84,84,84,0.8)"
+                  placeholderTextColor="rgb(0,0,0)"
                   keyboardType="default"
                   returnKeyType="next"
                   autoCorrect={false}
@@ -93,7 +94,7 @@ class Login extends Component {
                 <TextInput
                   style={styles.input}
                   placeholder="Senha"
-                  placeholderTextColor="rgba(84,84,84,0.8)"
+                  placeholderTextColor="rgb(0,0,0)"
                   onChangeText={UserPassword => this.setState({ UserPassword })}
                   keyboardType="default"
                   secureTextEntry={true}
@@ -120,30 +121,39 @@ class Login extends Component {
   }
 }
 class ProfileActivity extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     const { goBack } = this.props.navigation;
     return (
-      <View style={styles.MainContainer}>
-        <Text style={styles.TextComponentStyle}>
-          {" "}
-          {this.props.navigation.state.params.Email}{" "}
-        </Text>
-        <TouchableOpacity style={styles.buttonContainer}>
-          <Text
-            style={styles.buttonText}
-            title="Exercicios"
-            onPress={() => this.props.navigation.navigate("list")}
-          >
+      <View style={styles.container}>
+        <View style={styles.container}>
+          <Text style={styles.TextComponentStyle}>
             {" "}
-            Exercicios{" "}
+            {this.props.navigation.state.params.Email}{" "}
           </Text>
-        </TouchableOpacity>
-        <Button
-          style={styles.buttonMains}
-          color="#1DA1F2"
-          title="Sair"
-          onPress={() => goBack(null)}
-        />
+          <TouchableOpacity style={styles.buttonContainer}>
+            <Text
+              style={styles.buttonText}
+              title="Exercicios"
+              onPress={() => this.props.navigation.navigate("list")}
+            >
+              {" "}
+              Exercicios{" "}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.infoContainer}>
+          <TouchableOpacity>
+            <Button
+              style={styles.buttonMains}
+              color="#1DA1F2"
+              title="Sair"
+              onPress={() => goBack(null)}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -180,7 +190,7 @@ class list extends Component {
         style={{
           height: 1,
           width: "100%",
-          backgroundColor: "#000000"
+          backgroundColor: "#000"
         }}
       />
     );
@@ -197,30 +207,27 @@ class list extends Component {
       );
     }
     return (
-      <View style={styles.container}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="#1DA1F2"
-          hidden={true}
-        />
+      <View style={styles.MainContainer}>
         <FlatList
+          backgroundColor="#1DA1F2"
           data={this.state.dataSource}
           ItemSeparatorComponent={this.FlatListItemSeparator}
           renderItem={({ item }) => (
             <Text
-              style={styles.title}
+              style={styles.FlatListItemStyle}
               onPress={this.GetFlatListItem.bind(this, item.desc)}
             >
               {" "}
               {item.desc}{" "}
             </Text>
           )}
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
     );
   }
 }
+
 const RootStack = createStackNavigator(
   {
     Login: {
@@ -230,7 +237,10 @@ const RootStack = createStackNavigator(
       }
     },
     ProfileActivity: {
-      screen: ProfileActivity
+      screen: ProfileActivity,
+      navigationOptions: {
+        header: null
+      }
     },
     list: {
       screen: list,
@@ -311,15 +321,14 @@ const styles = StyleSheet.create({
   },
   MainContainer: {
     justifyContent: "center",
-    flex: 1,
-    margin: 10
+    flex: 1
   },
   TextInputStyleClass: {
     textAlign: "center",
     marginBottom: 7,
     height: 40,
     borderWidth: 1,
-    borderColor: "#2196F3",
+    borderColor: "#1DA1F2",
     borderRadius: 5
   },
   TextComponentStyle: {
@@ -329,7 +338,7 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   MainContainerList: {
-    justifyContent: "center",
+    justifyContent: "flex-end",
     flex: 1,
     margin: 10,
     paddingTop: 20
@@ -337,7 +346,8 @@ const styles = StyleSheet.create({
   FlatListItemStyle: {
     padding: 10,
     fontSize: 18,
-    height: 44
+    height: 44,
+    color: "#050000"
   },
   FlatListStyle: {
     height: 100
